@@ -1,9 +1,20 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { useState } from "react";
+import SingleCountry from "./SingleCountry";
 
-function CountryCard({ country: data }) {
+function CountryCard({ country: data, setShowSingle }) {
   return (
-    <div className="bg-gray-700 flex flex-col justify-center items-center rounded-lg shadow-2xl w-1/5">
+    <div
+      className="bg-gray-700 flex flex-col justify-center items-center rounded-lg shadow-2xl w-1/5"
+      onClick={() =>
+        setShowSingle((prevSingle) => ({
+          ...prevSingle,
+          show: true,
+          country: data,
+        }))
+      }
+    >
       <img
         src={data.flags.png}
         alt={data.flags.alt}
@@ -29,5 +40,3 @@ function CountryCard({ country: data }) {
 }
 
 export default CountryCard;
-
-function addcollon(number) {}

@@ -1,8 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import CountryCard from "./CountryCard";
+import SingleCountry from "./SingleCountry";
+import { useState } from "react";
 
 function Content() {
+  const [showSingle, setShowSingle] = useState({ show: false, country: "" });
+
   const fetchCountry = async () => {
     const { data } = await axios.get("https://restcountries.com/v3.1/all");
     return data.slice(0, 8);
@@ -14,7 +18,18 @@ function Content() {
 
   return (
     <div className="flex justify-between items-center justify-items-center flex-wrap gap-8 px-24 py-8">
-      {data && data.map((c) => <CountryCard key={c.numericCode} country={c} />)}
+      {showSingle.show ? (
+        <SingleCountry country={showSingle.country} />
+      ) : (
+        data &&
+        data.map((c) => (
+          <CountryCard
+            key={c.name.common}
+            country={c}
+            setShowSingle={setShowSingle}
+          />
+        ))
+      )}
     </div>
   );
 }
